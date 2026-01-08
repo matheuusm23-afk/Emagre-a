@@ -6,15 +6,15 @@ Landing Page oficial do **Desafio 24 Dias**, um protocolo focado em emagreciment
 ## ✨ Destaques
 - **IA Integrada**: Gerador de dicas motivadoras personalizado via Google Gemini API.
 - **Design Premium**: Interface Dark Mode com acentos em roxo neon, otimizada para conversão.
-- **Alta Performance**: Desenvolvido com React 19 e Tailwind CSS sem necessidade de bundles pesados.
+- **Zero Build Time**: Configurado para deploy estático puro, garantindo carregamento instantâneo.
 
 ## 🚀 Como Executar
 1. Clone este repositório.
-2. Certifique-se de ter um ambiente para servir arquivos estáticos (ex: Live Server ou `npx serve .`).
-3. Configure a chave `API_KEY` para as funcionalidades de IA (opcional).
+2. Use qualquer servidor estático. Exemplo: `npx serve .`
+3. O site carregará as dependências (React, Lucide, GenAI) diretamente via ESM.
 
-## 🌍 Deploy
-Hospedado automaticamente na **Vercel** com integração contínua.
+## 🌍 Deploy na Vercel
+O projeto está configurado para **Static Serving**. A Vercel ignorará `npm install` e servirá os arquivos diretamente, eliminando avisos de depreciação de pacotes Node legados.
 
 ---
 *Focado em gerar resultados reais e transformação duradoura.*

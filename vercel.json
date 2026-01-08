@@ -4,6 +4,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "framework": null,
+  "buildCommand": null,
+  "installCommand": null,
   "headers": [
     {
       "source": "/(.*)",
