@@ -1,20 +1,23 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# Desafio 24 Dias - Transformação Real
 
-This contains everything you need to run your app locally.
+Landing Page de alta conversão para o protocolo de emagrecimento **Desafio 24 Dias**. 
 
-View your app in AI Studio: https://ai.studio/apps/drive/1COcJI0PQyC6x6lnHjkgSDKD0l4vncAn0
+## 🚀 Tecnologias
+- **React 19** (via ESM)
+- **Tailwind CSS** (Estilização)
+- **Lucide React** (Ícones)
+- **Vercel** (Hospedagem)
 
-## Run Locally
+## 🛠️ Como rodar localmente
+Este projeto utiliza módulos ES nativos e não requer etapa de compilação complexa.
 
-**Prerequisites:**  Node.js
+1. Clone o repositório.
+2. Utilize um servidor estático (ex: `npx serve .`).
+3. Abra `localhost:3000`.
 
+## 📦 Deploy
+O deploy é automático via **Vercel** ao realizar push para a branch `main`.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+*Este site foi desenvolvido focando em performance e conversão direta para o checkout Hotmart.*
