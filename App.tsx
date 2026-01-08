@@ -11,11 +11,8 @@ import {
   Dumbbell, 
   Brain, 
   ChevronUp, 
-  ShieldCheck,
-  Sparkles,
-  Loader2
+  ShieldCheck
 } from 'lucide-react';
-import { getAITip } from './services/geminiService';
 
 const HOTMART_LINK = "https://go.hotmart.com/B103166329T?ap=9820";
 
@@ -31,23 +28,6 @@ const FeatureCard = ({ title, description, icon: Icon }: any) => (
 
 const App: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [weight, setWeight] = useState('');
-  const [goal, setGoal] = useState('');
-  const [aiTip, setAiTip] = useState('');
-  const [loadingTip, setLoadingTip] = useState(false);
-
-  const handleGetTip = async () => {
-    if (!weight || !goal) return;
-    setLoadingTip(true);
-    try {
-      const tip = await getAITip(goal, weight);
-      setAiTip(tip || '');
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoadingTip(false);
-    }
-  };
 
   const features = [
     {
@@ -180,53 +160,6 @@ const App: React.FC = () => {
             {features.map((feature, idx) => (
               <FeatureCard key={idx} {...feature} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* AI Interactivity Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto bg-slate-900 rounded-[32px] p-8 md:p-12 border border-purple-500/20 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-            <Sparkles size={120} className="text-purple-500" />
-          </div>
-          <div className="relative z-10 text-center md:text-left">
-            <h2 className="text-2xl md:text-4xl font-bold text-white mb-6 flex items-center justify-center md:justify-start gap-3">
-              <Sparkles className="text-purple-500" />
-              Dica Personalizada para Você
-            </h2>
-            <p className="text-slate-400 mb-8 max-w-lg">
-              Insira seus dados abaixo para receber uma dica exclusiva gerada pela nossa tecnologia para o seu primeiro dia de desafio.
-            </p>
-            <div className="grid md:grid-cols-2 gap-4 mb-8">
-              <input 
-                type="number" 
-                placeholder="Seu peso atual (kg)" 
-                className="bg-slate-950 border border-slate-800 rounded-xl px-6 py-4 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all text-white"
-                value={weight}
-                onChange={(e) => setWeight(e.target.value)}
-              />
-              <input 
-                type="text" 
-                placeholder="Seu principal objetivo" 
-                className="bg-slate-950 border border-slate-800 rounded-xl px-6 py-4 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all text-white"
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-              />
-            </div>
-            <button 
-              onClick={handleGetTip}
-              disabled={loadingTip || !weight || !goal}
-              className="w-full md:w-auto bg-slate-100 text-slate-950 px-10 py-4 rounded-xl font-bold hover:bg-white transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {loadingTip ? <Loader2 className="animate-spin" /> : 'GERAR MINHA DICA'}
-            </button>
-
-            {aiTip && (
-              <div className="mt-8 p-6 bg-purple-500/10 border border-purple-500/20 rounded-2xl animate-fade-in">
-                <p className="text-purple-200 leading-relaxed whitespace-pre-wrap">{aiTip}</p>
-              </div>
-            )}
           </div>
         </div>
       </section>
