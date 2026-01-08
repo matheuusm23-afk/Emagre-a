@@ -2,7 +2,8 @@
 import { GoogleGenAI } from "@google/genai";
 
 export const getAITip = async (userGoal: string, currentWeight: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Inicialização conforme as diretrizes para garantir o uso da chave do ambiente
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const prompt = `
     A pessoa tem o objetivo de: "${userGoal}" e pesa atualmente ${currentWeight}kg.
@@ -22,6 +23,6 @@ export const getAITip = async (userGoal: string, currentWeight: string) => {
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "Não foi possível carregar sua dica personalizada agora, mas lembre-se: o primeiro passo é sempre o mais importante!";
+    return "O primeiro passo é sempre o mais importante! Lembre-se de manter a hidratação hoje: beba pelo menos 35ml de água por cada quilo do seu peso corporal.";
   }
 };
