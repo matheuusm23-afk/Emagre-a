@@ -11,8 +11,11 @@ import {
   Dumbbell, 
   Brain, 
   ChevronUp, 
-  ShieldCheck 
+  ShieldCheck,
+  Sparkles,
+  Loader2
 } from 'lucide-react';
+import { getAITip } from './services/geminiService';
 
 const HOTMART_LINK = "https://go.hotmart.com/B103166329T?ap=9820";
 
@@ -28,6 +31,23 @@ const FeatureCard = ({ title, description, icon: Icon }: any) => (
 
 const App: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [weight, setWeight] = useState('');
+  const [goal, setGoal] = useState('');
+  const [aiTip, setAiTip] = useState('');
+  const [loadingTip, setLoadingTip] = useState(false);
+
+  const handleGetTip = async () => {
+    if (!weight || !goal) return;
+    setLoadingTip(true);
+    try {
+      const tip = await getAITip(goal, weight);
+      setAiTip(tip || '');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingTip(false);
+    }
+  };
 
   const features = [
     {
@@ -84,7 +104,7 @@ const App: React.FC = () => {
     },
     {
       question: "Como recebo o acesso?",
-      answer: "Imediatamente após a confirmação do pagamento, você recebe os dados de acesso no seu e-mail para baixar o guia e começar agora mesmo."
+      answer: "Imediatamente após a confirmação do pagamento, você recebe os dados de acesso no seu e-mail para baixar o material e começar agora mesmo."
     },
     {
       question: "Tenho alguma garantia?",
@@ -99,7 +119,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold">24</div>
-            <span className="font-bold text-xl tracking-tight text-white">DESAFIO 24 DIAS</span>
+            <span className="font-bold text-xl tracking-tight text-white uppercase italic">Desafio 24 Dias</span>
           </div>
           <a href={HOTMART_LINK} target="_blank" rel="noopener noreferrer" className="hidden md:block bg-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-purple-700 transition-colors shadow-lg shadow-purple-900/20">
             Começar Agora
@@ -126,23 +146,24 @@ const App: React.FC = () => {
               href={HOTMART_LINK} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-purple-600 text-white px-10 py-5 rounded-2xl text-lg font-bold hover:bg-purple-700 transition-all transform hover:scale-105 shadow-xl shadow-purple-900/40 flex items-center justify-center gap-2"
+              className="bg-purple-600 text-white px-10 py-5 rounded-2xl text-lg font-bold hover:bg-purple-700 transition-all transform hover:scale-105 shadow-xl shadow-purple-900/40 flex items-center justify-center gap-2 group"
             >
-              QUERO MINHA TRANSFORMAÇÃO <ArrowRight size={20} />
+              QUERO MINHA TRANSFORMAÇÃO 
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
           <div className="mt-12 flex items-center justify-center gap-6 md:gap-12 flex-wrap opacity-40">
             <div className="flex items-center gap-2">
               <CheckCircle size={18} className="text-purple-500" />
-              <span className="font-medium text-white text-sm">Acesso Vitalício</span>
+              <span className="font-medium text-white text-sm uppercase tracking-wider">Acesso Vitalício</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle size={18} className="text-purple-500" />
-              <span className="font-medium text-white text-sm">Garantia de 7 Dias</span>
+              <span className="font-medium text-white text-sm uppercase tracking-wider">Garantia de 7 Dias</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle size={18} className="text-purple-500" />
-              <span className="font-medium text-white text-sm">Pagamento Seguro</span>
+              <span className="font-medium text-white text-sm uppercase tracking-wider">Pagamento Seguro</span>
             </div>
           </div>
         </div>
@@ -159,6 +180,53 @@ const App: React.FC = () => {
             {features.map((feature, idx) => (
               <FeatureCard key={idx} {...feature} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AI Interactivity Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto bg-slate-900 rounded-[32px] p-8 md:p-12 border border-purple-500/20 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+            <Sparkles size={120} className="text-purple-500" />
+          </div>
+          <div className="relative z-10 text-center md:text-left">
+            <h2 className="text-2xl md:text-4xl font-bold text-white mb-6 flex items-center justify-center md:justify-start gap-3">
+              <Sparkles className="text-purple-500" />
+              Dica Personalizada para Você
+            </h2>
+            <p className="text-slate-400 mb-8 max-w-lg">
+              Insira seus dados abaixo para receber uma dica exclusiva gerada pela nossa tecnologia para o seu primeiro dia de desafio.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+              <input 
+                type="number" 
+                placeholder="Seu peso atual (kg)" 
+                className="bg-slate-950 border border-slate-800 rounded-xl px-6 py-4 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all text-white"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+              />
+              <input 
+                type="text" 
+                placeholder="Seu principal objetivo" 
+                className="bg-slate-950 border border-slate-800 rounded-xl px-6 py-4 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all text-white"
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+              />
+            </div>
+            <button 
+              onClick={handleGetTip}
+              disabled={loadingTip || !weight || !goal}
+              className="w-full md:w-auto bg-slate-100 text-slate-950 px-10 py-4 rounded-xl font-bold hover:bg-white transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              {loadingTip ? <Loader2 className="animate-spin" /> : 'GERAR MINHA DICA'}
+            </button>
+
+            {aiTip && (
+              <div className="mt-8 p-6 bg-purple-500/10 border border-purple-500/20 rounded-2xl animate-fade-in">
+                <p className="text-purple-200 leading-relaxed whitespace-pre-wrap">{aiTip}</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -202,7 +270,7 @@ const App: React.FC = () => {
                   {faq.question}
                   {openFaq === idx ? <ChevronUp size={20} className="text-purple-500" /> : <ChevronDown size={20} className="text-slate-500" />}
                 </button>
-                <div className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${openFaq === idx ? 'max-h-48 py-5 border-t border-slate-800' : 'max-h-0'}`}>
+                <div className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${openFaq === idx ? 'max-h-64 py-5 border-t border-slate-800' : 'max-h-0'}`}>
                   <p className="text-slate-400 leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
@@ -220,9 +288,11 @@ const App: React.FC = () => {
           <h2 className="text-3xl md:text-5xl font-bold mb-8">Comece sua transformação hoje</h2>
           <div className="bg-slate-900 rounded-[32px] p-8 md:p-12 shadow-2xl border border-purple-500/20 text-white mb-10 max-w-lg mx-auto transform hover:scale-[1.02] transition-transform">
             <p className="text-purple-400 font-semibold mb-2 uppercase tracking-widest text-sm">OFERTA DE LANÇAMENTO</p>
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <span className="text-slate-500 line-through text-2xl">R$ 250</span>
-              <span className="text-5xl font-black text-purple-500">R$ 67,00</span>
+            <div className="flex flex-col items-center justify-center gap-2 mb-6">
+              <span className="text-slate-500 line-through text-xl">R$ 250,00</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-5xl font-black text-purple-500 uppercase">R$ 67,00</span>
+              </div>
             </div>
             <ul className="text-left space-y-4 mb-8">
               <li className="flex items-center gap-3">
@@ -246,13 +316,13 @@ const App: React.FC = () => {
               href={HOTMART_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-purple-600 text-white py-5 rounded-2xl font-bold text-xl hover:bg-purple-700 transition-all shadow-xl shadow-purple-900/40 flex items-center justify-center gap-2"
+              className="w-full bg-purple-600 text-white py-5 rounded-2xl font-bold text-xl hover:bg-purple-700 transition-all shadow-xl shadow-purple-900/40 flex items-center justify-center gap-2 uppercase"
             >
               COMPRAR AGORA <ArrowRight size={24} />
             </a>
             <div className="mt-6 flex items-center justify-center gap-2 text-slate-500 text-sm">
               <ShieldCheck size={16} />
-              <span>Compra 100% segura e criptografada</span>
+              <span>Compra 100% segura via Hotmart</span>
             </div>
           </div>
           <p className="text-purple-300 text-sm max-w-md mx-auto">
@@ -269,9 +339,9 @@ const App: React.FC = () => {
             <span className="font-bold text-lg text-white">DESAFIO 24 DIAS</span>
           </div>
           <p className="text-slate-500 text-sm mb-6">&copy; 2024 Desafio 24 Dias. Todos os direitos reservados.</p>
-          <div className="flex justify-center gap-6 text-slate-500 text-xs font-medium">
-            <a href="#" className="hover:text-purple-400 transition-colors">Termos de Uso</a>
-            <a href="#" className="hover:text-purple-400 transition-colors">Políticas de Privacidade</a>
+          <div className="flex justify-center gap-6 text-slate-500 text-xs font-medium uppercase tracking-widest">
+            <a href="#" className="hover:text-purple-400 transition-colors">Termos</a>
+            <a href="#" className="hover:text-purple-400 transition-colors">Privacidade</a>
             <a href="#" className="hover:text-purple-400 transition-colors">Contato</a>
           </div>
           <p className="mt-10 text-[10px] text-slate-600 max-w-2xl mx-auto leading-relaxed">

@@ -1,23 +1,20 @@
 
-# Desafio 24 Dias - Transformação Real
+# Desafio 24 Dias - Método de Transformação
 
-Landing Page de alta conversão para o protocolo de emagrecimento **Desafio 24 Dias**. 
+Landing Page oficial do **Desafio 24 Dias**, um protocolo focado em emagrecimento saudável e mentalidade blindada.
 
-## 🚀 Tecnologias
-- **React 19** (via ESM)
-- **Tailwind CSS** (Estilização)
-- **Lucide React** (Ícones)
-- **Vercel** (Hospedagem)
+## ✨ Destaques
+- **IA Integrada**: Gerador de dicas motivadoras personalizado via Google Gemini API.
+- **Design Premium**: Interface Dark Mode com acentos em roxo neon, otimizada para conversão.
+- **Alta Performance**: Desenvolvido com React 19 e Tailwind CSS sem necessidade de bundles pesados.
 
-## 🛠️ Como rodar localmente
-Este projeto utiliza módulos ES nativos e não requer etapa de compilação complexa.
+## 🚀 Como Executar
+1. Clone este repositório.
+2. Certifique-se de ter um ambiente para servir arquivos estáticos (ex: Live Server ou `npx serve .`).
+3. Configure a chave `API_KEY` para as funcionalidades de IA (opcional).
 
-1. Clone o repositório.
-2. Utilize um servidor estático (ex: `npx serve .`).
-3. Abra `localhost:3000`.
-
-## 📦 Deploy
-O deploy é automático via **Vercel** ao realizar push para a branch `main`.
+## 🌍 Deploy
+Hospedado automaticamente na **Vercel** com integração contínua.
 
 ---
-*Este site foi desenvolvido focando em performance e conversão direta para o checkout Hotmart.*
+*Focado em gerar resultados reais e transformação duradoura.*

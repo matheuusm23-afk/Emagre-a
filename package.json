@@ -1,19 +1,19 @@
 
 {
   "name": "desafio-24-dias",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Site de apresentação do método Desafio 24 Dias",
+  "description": "Protocolo de transformação física em 24 dias.",
   "scripts": {
     "start": "npx serve .",
-    "build": "echo 'No build step required for this static site'"
+    "build": "echo 'Deploying static content...'"
   },
   "keywords": [
-    "fitness",
     "saúde",
+    "fitness",
     "emagrecimento",
-    "24-dias"
+    "protocolo-24-dias"
   ],
-  "author": "",
+  "author": "Desafio 24 Dias",
   "license": "MIT"
 }
